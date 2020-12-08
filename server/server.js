@@ -9,8 +9,8 @@
      connect = require('connect'),
      serveStatic = require('serve-static'),
      UAParser = require('./ua-parser'),
-     CONFIG = require("../config.json"),
-     lame = require('lame');
+     CONFIG = require("../config.json");
+    //  lame = require('lame');
 
  var uaParser = new UAParser();
 
@@ -56,15 +56,15 @@ server.on('connection', function(client) {
                 stream.pipe(fileWriter);
             break;
 
-            case "MP3":
-                writeStream = fs.createWriteStream( fileName + ".mp3" );
-                stream.pipe( new lame.Encoder(
-                {
-                    channels: 1, bitDepth: 16, sampleRate: meta.sampleRate, bitRate: 128, outSampleRate: 22050, mode: lame.MONO
-                })
-                )
-                .pipe( writeStream );
-            break;
+            // case "MP3":
+            //     writeStream = fs.createWriteStream( fileName + ".mp3" );
+            //     stream.pipe( new lame.Encoder(
+            //     {
+            //         channels: 1, bitDepth: 16, sampleRate: meta.sampleRate, bitRate: 128, outSampleRate: 22050, mode: lame.MONO
+            //     })
+            //     )
+            //     .pipe( writeStream );
+            // break;
         };
 
     });
