@@ -1,3 +1,5 @@
 {
-  "AudioEncoding":"WAV"
+  "AudioEncoding":"WAV",
+  "sslKey": "./cert/key.pem",
+  "sslCert": "./cert/cert.pem"
 }

@@ -3,26 +3,24 @@
  */
  var binaryServer = require('binaryjs').BinaryServer,
      https = require('https'),
+     app = require('express')(),
      wav = require('wav'),
      opener = require('opener'),
      fs = require('fs'),
-     connect = require('connect'),
+    //  connect = require('connect'),
      serveStatic = require('serve-static'),
-     UAParser = require('./ua-parser'),
      CONFIG = require("../config.json");
     //  lame = require('lame');
-
- var uaParser = new UAParser();
 
  if(!fs.existsSync("recordings"))
     fs.mkdirSync("recordings");
 
 var options = {
-    key:    fs.readFileSync('ssl/server.key'),
-    cert:   fs.readFileSync('ssl/server.crt'),
+    key:    fs.readFileSync('ssl/key.pem'),
+    cert:   fs.readFileSync('ssl/cert.pem'),
 };
 
-var app = connect();
+// var app = connect();
 
 app.use(serveStatic('public'));
 
@@ -37,15 +35,12 @@ server.on('connection', function(client) {
     console.log("new connection...");
     var fileWriter = null;
     var writeStream = null;
-    
-    var userAgent  =client._socket.upgradeReq.headers['user-agent'];
-    uaParser.setUA(userAgent);
-    var ua = uaParser.getResult();
 
     client.on('stream', function(stream, meta) {
 
         console.log("Stream Start@" + meta.sampleRate +"Hz");
-        var fileName = "recordings/"+ ua.os.name +"-"+ ua.os.version +"_"+ new Date().getTime();
+        console.log(meta);
+        var fileName = "recordings/"+"_"+ new Date().getTime();
         
         switch(CONFIG.AudioEncoding){
             case "WAV":
