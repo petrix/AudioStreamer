@@ -1,13 +1,14 @@
 /**
  * Created by noamc on 8/31/14.
  */
+const path = require('path');
  var binaryServer = require('binaryjs').BinaryServer,
      https = require('https'),
-     app = require('express')(),
+     express = require('express'),
+    connect = require('connect'),
      wav = require('wav'),
      opener = require('opener'),
      fs = require('fs'),
-    //  connect = require('connect'),
      serveStatic = require('serve-static'),
      CONFIG = require("../config.json");
     //  lame = require('lame');
@@ -16,13 +17,20 @@
     fs.mkdirSync("recordings");
 
 var options = {
-    key:    fs.readFileSync('ssl/key.pem'),
-    cert:   fs.readFileSync('ssl/cert.pem'),
+    key:    fs.readFileSync('cert/key.pem'),
+    cert:   fs.readFileSync('cert/cert.pem'),
 };
 
 // var app = connect();
-
-app.use(serveStatic('public'));
+var app = express();
+app.use(function (req, res, next) {
+    res.header('Cache-Control', 'private, no-cache, no-store, must-revalidate');
+    res.header('Expires', '-1');
+    res.header('Pragma', 'no-cache');
+    next();
+});
+app.use('/', express.static(__dirname + '/public/'));
+// app.use(serveStatic('public'));
 
 var server = https.createServer(options,app);
 server.listen(9191);
