@@ -19,10 +19,8 @@
   "homepage": "https://github.com/noamtcohen/AudioStreamer",
   "dependencies": {
     "binaryjs": "*",
-    "connect": "*",
     "express": "*",
     "opener": "*",
-    "serve-static": "*",
     "wav": "*"
   }
 }
