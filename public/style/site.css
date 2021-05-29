@@ -1,8 +1,8 @@
 #canvas-container{
-    margin-top: 20px;
+    /* margin-top: 20px; */
     border: 1px dashed lightblue;
     align-content: center;
-    width: 515px;
+    width: 800px;
 }
 .page-header .glyphicon{
     vertical-align: bottom;
